@@ -1,15 +1,15 @@
 var trackEl = document.querySelector("#track");
 
-var APIkey = "3f23fb6428b4807660fd52a96c74a89d";
+var APIkey = "439128-bootcamp-AZT0NTTN";
 
 
 
 
 var getArtistInfo = function(){
 
-var artist = "Prodigy";
+var artist = "weezer";
 
-var queryURL = "https://api.musixmatch.com/ws/1.1/artist.search?q_artist="+artist+"&page_size=5&apikey="+APIkey;
+var queryURL = "https://tastedive.com/api/similar?q="+artist+"&"+APIkey;
 
 
 fetch(queryURL)
