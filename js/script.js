@@ -6,12 +6,12 @@ var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJpUkZybmVCMm1rSk9Pel
 
 var getInfo = function(){
 
-var animalbreed = "great dane";
+var animalbreed = "great dane"; 
 
-var queryURL = "https://api.petfinder.com/v2/";
+var queryURL = "https://api.petfinder.com/v2/animals?breed="+animalbreed;
 
 
-fetch(queryURL,{headers:{"Authorization":"Bearer "+token,"access-control-allow-origin": origin }})
+fetch(queryURL,{headers:{"Authorization":"Bearer "+token}})
     .then(function(response){
         if(response.ok){
             response.json().then(function(data){
