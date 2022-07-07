@@ -1,4 +1,3 @@
-var breedEl = document.querySelector("#breed");
 var animalInfoEl = document.querySelector("#animalInfo");
 var breedInputEl = document.querySelector("#breed");
 
@@ -9,6 +8,13 @@ var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJpUkZybmVCMm1rSk9Pel
 
 
 var getInfo = function(){
+
+    if(document.getElementsByClassName("animal-info-item")){
+        document.querySelectorAll(".animal-info-item").forEach(function(a){
+            a.remove()
+          })
+        }
+
 
 var animalbreed = breedInputEl.value; 
 
@@ -21,13 +27,26 @@ fetch(queryURL,{headers:{"Authorization":"Bearer "+token}})
             response.json().then(function(data){
                 console.log(data);
                 for(i=0; i<data.animals.length; i++){
-                    var petName = document.createElement("h1");
-                    petName.textContent=(data.animals[i].name);
-                    animalInfoEl.appendChild(petName);
 
-                    var petType = document.createElement("h2");
+                    var animalCard = document.createElement("article");
+                    animalCard.classList=("animal-card");
+
+
+                    var primPhoto = document.createElement("img");
+                    primPhoto.classList=("animal-info-item");
+                    primPhoto.src=(data.animals[i].primary_photo_cropped.small);
+                    primPhoto.height=(60);
+                    animalCard.appendChild(primPhoto);
+
+                    var petName = document.createElement("h1");
+                    petName.classList=("animal-info-item");
+                    petName.textContent=(data.animals[i].name);
+                    animalCard.appendChild(petName);
+
+                    var petType = document.createElement("p");
+                    petType.classList=("animal-info-item");
                     petType.textContent=(data.animals[i].type);
-                    animalInfoEl.appendChild(petType);
+                    animalCard.appendChild(petType);
 
                     if(data.animals[i].breeds.secondary){
                         var secondaryBreed = (", "+data.animals[i].breeds.secondary);
@@ -36,9 +55,12 @@ fetch(queryURL,{headers:{"Authorization":"Bearer "+token}})
                         var secondaryBreed = ("");
                     }
 
-                    var petBreed = document.createElement("h2");
+                    var petBreed = document.createElement("p");
+                    petBreed.classList=("animal-info-item");
                     petBreed.textContent=(data.animals[i].breeds.primary+secondaryBreed);
-                    animalInfoEl.appendChild(petBreed);
+                    animalCard.appendChild(petBreed);
+
+                    animalInfoEl.appendChild(animalCard);
                 }
 
             })
@@ -48,4 +70,5 @@ fetch(queryURL,{headers:{"Authorization":"Bearer "+token}})
 
 }
 
-getInfo();
+breedInputEl.addEventListener("change",getInfo);
+// getInfo();
